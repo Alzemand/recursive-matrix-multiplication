@@ -1,9 +1,10 @@
-# Multiplicação de matrizes 64x64 geradas aleatóriamente. 
-# Implementação recursiva
+#Implemente o algoritimo de multiplicação de matrizes recursivo.
 
 from random import randint
-from time import sleep
 
+tamanho_matriz = 64
+
+#Função para gerar matriz aleatório 
 def gerar_matriz(tamanho):
     matriz=[]
     for i in range(tamanho):
@@ -19,6 +20,7 @@ def gerar_matriz(tamanho):
                 matriz[i].append(2)
     return matriz
 
+#Função para gerar matriz nula
 def gerar_matriz_nula(tamanho):
     matriz=[]
     for i in range(tamanho):
@@ -28,28 +30,36 @@ def gerar_matriz_nula(tamanho):
             matriz[i].append(0)
     return matriz
 
-a = [[0,2,1], [0,1,1], [1,1,0]]
-b = [[0,1,0], [1,1,1], [1,1,1]]
-# c = [[3,3,3], [2,2,2], [1,2,1]]
-c = gerar_matriz_nula(3)
+a = gerar_matriz(tamanho_matriz)
+b = gerar_matriz(tamanho_matriz)
+c = gerar_matriz_nula(tamanho_matriz)
 
 def mult_matriz(a, b, c, index=0):
     elemento = 0
     x = index
-    for y in range(3):
-        for z in range(3):
+    for y in range(tamanho_matriz):
+        for z in range(tamanho_matriz):
             elemento += a[x][z] * b[z][y]
+        c[x][y] = elemento
+        elemento = 0
+    if (x < tamanho_matriz - 1):
+        mult_matriz(a, b, c, index = index + 1)
+    return c
 
-    # if (x <= 2):
-    #     mult_matriz(a, b, c, index = index + 1)
-    print(elemento)
-
-for x in range(3):
+print("\n")
+print("--- MATRIZ A ---")
+for x in range(tamanho_matriz):
     print(a[x])
 
-print("---")
-
-for x in range(3):
+print("\n")
+print("--- MATRIZ B ---")
+for x in range(tamanho_matriz):
     print(b[x])
 
-mult_matriz(a, b, c)
+print("\n")
+print("--- MATRIZ PRODUTO C ---")
+c = mult_matriz(a, b, c)
+for x in range(tamanho_matriz):
+    print(c[x])
+
+print("\n")
