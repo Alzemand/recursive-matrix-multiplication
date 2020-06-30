@@ -1,0 +1,3 @@
+Given two matrices A and B. The task is to multiply matrix A and matrix B recursively. If matrix A and matrix B are not multiplicative compatible, then generate output “Not Possible”.
+
+In Recursive Matrix Multiplication, we implement three loops of Iteration through recursive calls. The inner most Recursive call of multiplyMatrix() is to iterate k (col1 or row2). The second recursive call of multiplyMatrix() is to change the columns and the outermost recursive call is to change rows.
