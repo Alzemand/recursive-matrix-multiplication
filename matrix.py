@@ -1,6 +1,7 @@
 #Implemente o algoritimo de multiplicação de matrizes recursivo.
-
 from random import randint
+import time
+import timeit
 
 tamanho_matriz = 64
 
@@ -30,10 +31,6 @@ def gerar_matriz_nula(tamanho):
             matriz[i].append(0)
     return matriz
 
-a = gerar_matriz(tamanho_matriz)
-b = gerar_matriz(tamanho_matriz)
-c = gerar_matriz_nula(tamanho_matriz)
-
 def mult_matriz(a, b, c, index=0):
     elemento = 0
     x = index
@@ -45,6 +42,10 @@ def mult_matriz(a, b, c, index=0):
     if (x < tamanho_matriz - 1):
         mult_matriz(a, b, c, index = index + 1)
     return c
+
+a = gerar_matriz(tamanho_matriz)
+b = gerar_matriz(tamanho_matriz)
+c = gerar_matriz_nula(tamanho_matriz)
 
 print("\n")
 print("--- MATRIZ A ---")
@@ -58,8 +59,11 @@ for x in range(tamanho_matriz):
 
 print("\n")
 print("--- MATRIZ PRODUTO C ---")
+inicio = timeit.default_timer()
 c = mult_matriz(a, b, c)
+fim = timeit.default_timer()
 for x in range(tamanho_matriz):
     print(c[x])
-
 print("\n")
+
+print ('duração da execução: %f' % (fim - inicio))
