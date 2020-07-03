@@ -9,28 +9,19 @@ def gerar_matriz_aleatoria(tamanho):
     Função para gerar uma matriz quadrada aleatória,
     Probabilidade: 0(40%), 1(30%) ou 2(30%)
     '''
-    matriz=[]
+    matriz = [[] for i in range(tamanho)]
     for i in range(tamanho):
-        matriz.append(i)
-        matriz[i] = []
         for j in range(tamanho):
-            x = randint(0,10)
-            if (x < 4):
-                matriz[i].append(0)
-            elif (x > 6):
-                matriz[i].append(1)
-            else:
-                matriz[i].append(2)
+            x = randint(0, 10)
+            matriz.append((x >= 4) + (4 <= x <= 6))
     return matriz
 
 def square_matrix_multiply_recursive(a, b):
     size = len(a)
     if size == 1:
-        c = criar_matriz_vazia(size)
-        c[0][0] = a[0][0] * b[0][0]
-        return c
+        return [[a[0][0] * b[0][0]]]
 
-    step_size = int(size/2)
+    step_size = int(size / 2)
 
     #c11
     a11 = sub_matriz(a, 0, 0, step_size)
@@ -68,56 +59,50 @@ def square_matrix_multiply_recursive(a, b):
 def square_matrix_multiply_direct(a, b):
     size = len(a)
     c = criar_matriz_vazia(size)
-    for i in range(0, size):
-        for j in range(0, size):
-            res = 0
-            for k in range(0, size):
-                res = res + a[i][k] * b[k][j]
-            c[i][j] = res
+    for i in range(size):
+        for j in range(size):
+            c[i][j] = sum(
+                a[i][k] * b[k][j] for k in range(size)
+            )
     return c
 
 def sub_matriz(m, line, col, size):
     sub = criar_matriz_vazia(size)
-    for i in range(0, size):
-        for j in range(0, size):
+    for i in range(size):
+        for j in range(size):
             sub[i][j] = m[i + line][j + col]
     return sub
 
 def criar_matriz(c11, c12, c21, c22):
     size = len(c11)
     c = criar_matriz_vazia(len(c11) * 2)
-    for i in range(0, size):
-        for j in range(0, size):
+    for i in range(size):
+        for j in range(size):
             c[i][j] = c11[i][j]
 
-    for i in range(0, size):
-        for j in range(0, size):
+    for i in range(size):
+        for j in range(size):
             c[i][j + size] = c12[i][j]
 
-    for i in range(0, size):
-        for j in range(0, size):
+    for i in range(size):
+        for j in range(size):
             c[i + size][j] = c21[i][j]
 
-    for i in range(0, size):
-        for j in range(0, size):
+    for i in range(size):
+        for j in range(size):
             c[i + size][j + size] = c22[i][j]
     return c
 
 
 def soma_matriz(c1, c2):
     size = len(c1)
-    c = criar_matriz_vazia(size)
-    for i in range(0, size):
-        for j in range(0, size):
-            c[i][j] = c1[i][j] + c2[i][j]
-
-    return c
+    return [
+        [c1[i][j] + c2[i][j] for j in range(size)]
+        for i in range(size)
+    ]
 
 def criar_matriz_vazia(size):
-    res = [None] * size
-    for i in range(size):
-        res[i] = [None] * size
-    return res
+    return [[None] * size for i in range(size)]
 
 
 a = gerar_matriz_aleatoria(tamanho_matriz)
