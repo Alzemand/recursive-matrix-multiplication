@@ -13,7 +13,7 @@ def gerar_matriz_aleatoria(tamanho):
     for i in range(tamanho):
         for j in range(tamanho):
             x = randint(0, 10)
-            matriz.append((x >= 4) + (4 <= x <= 6))
+            matriz[i].append((x >= 4) + (4 <= x <= 6))
     return matriz
 
 def square_matrix_multiply_recursive(a, b):
